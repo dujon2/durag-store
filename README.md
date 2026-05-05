@@ -1,28 +1,44 @@
 # Durag Store
 
-Full-stack e-commerce application built with React (frontend) and FastAPI (backend). Users can browse durags, add items to a cart, and see totals update dynamically.
+This is a full-stack e-commerce project I built to practice connecting a React frontend to a Python backend.
+
+The idea is simple: a small durag store where users can browse products, add them to a cart, and see the total update in real time.
 
 ---
 
-# 🚀 How to Run This Project
+## What this project does
 
-## 🧰 Prerequisites
-
-Install these first:
-
-* Node.js → https://nodejs.org/
-* Python 3.9+ → https://www.python.org/
-
-Verify installation:
-
-```bash
-node -v
-python --version
-```
+* Displays durag products from a FastAPI backend
+* Lets users search for products by name
+* Allows adding items to a cart
+* Calculates the cart total dynamically
+* Keeps the frontend and backend fully separated
 
 ---
 
-# 📥 1. Clone the Repository
+## Tech stack
+
+**Frontend**
+
+* React (with Vite)
+* JavaScript
+* CSS
+
+**Backend**
+
+* Python
+* FastAPI
+* Uvicorn
+
+---
+
+## How to run it
+
+You’ll need **two terminals open** — one for the backend and one for the frontend.
+
+---
+
+### 1. Clone the repo
 
 ```bash
 git clone https://github.com/dujon2/durag-store.git
@@ -31,192 +47,97 @@ cd durag-store
 
 ---
 
-# 🐍 2. Run the Backend (FastAPI)
-
-## Step 1: Go to backend folder
+### 2. Start the backend
 
 ```bash
 cd backend
-```
-
-## Step 2: Create virtual environment (first time only)
-
-```bash
 python -m venv venv
-```
-
-## Step 3: Activate virtual environment
-
-### Windows:
-
-```bash
 venv\Scripts\activate
-```
-
-### Mac/Linux:
-
-```bash
-source venv/bin/activate
-```
-
-You should now see `(venv)` in your terminal.
-
----
-
-## Step 4: Install dependencies
-
-```bash
 pip install fastapi uvicorn
-```
-
----
-
-## Step 5: Start backend server
-
-```bash
 uvicorn main:app --reload
 ```
 
-Backend will run at:
+If everything worked, you should see:
 
 ```text
-http://127.0.0.1:8000
+Uvicorn running on http://127.0.0.1:8000
 ```
 
----
+You can also check this in your browser:
 
-## Step 6: Test backend
-
-Open in browser:
-
-```text
+```
 http://127.0.0.1:8000/products
 ```
 
-You should see JSON product data.
-
 ---
 
-# ⚛️ 3. Run the Frontend (React)
+### 3. Start the frontend
 
-## Open a NEW terminal (keep backend running)
-
----
-
-## Step 1: Go to frontend folder
+Open a second terminal:
 
 ```bash
 cd frontend
-```
-
----
-
-## Step 2: Install dependencies
-
-```bash
 npm install
-```
-
----
-
-## Step 3: Start frontend
-
-```bash
 npm run dev
 ```
 
-Frontend will run at:
+Then go to:
 
-```text
+```
 http://localhost:5173
 ```
 
 ---
 
-## Step 4: Open the app
+## Important
 
-Go to:
-
-```text
-http://localhost:5173
-```
-
-You should now see the durag store with products.
-
----
-
-# 🔁 Important
-
-You must run BOTH:
+Both servers need to be running at the same time:
 
 * Backend → http://127.0.0.1:8000
 * Frontend → http://localhost:5173
 
-If one is not running, the app will not work.
+If the backend isn’t running, products won’t load.
 
 ---
 
-# ⚠️ Troubleshooting
+## How it works (quick explanation)
 
-## No products showing
+When the page loads, the React app calls:
 
-* Make sure backend is running
-* Visit `/products` directly in browser
-
-## CORS error
-
-Ensure backend includes:
-
-```python
-allow_origins=["http://localhost:5173"]
+```js
+fetch("http://127.0.0.1:8000/products")
 ```
 
-## Virtual environment not working
+The FastAPI backend returns product data, and React stores it in state and renders it.
 
-Make sure you activated it:
+From there:
 
-```bash
-venv\Scripts\activate
-```
-
-## npm errors
-
-Try reinstalling:
-
-```bash
-npm install
-```
+* Search filters the product list
+* Clicking “Add to Cart” updates cart state
+* The total is calculated using `reduce`
 
 ---
 
-# 📂 Project Structure
+## What I focused on
 
-```text
-durag-store/
-├── backend/
-│   ├── main.py
-│   └── venv/
-├── frontend/
-│   ├── src/
-│   ├── package.json
-│   └── vite.config.js
-├── README.md
-```
+* Understanding how frontend ↔ backend communication works
+* Managing state in React (especially cart logic)
+* Structuring a simple full-stack project
+* Writing cleaner, more readable code
 
 ---
 
-# 🧠 What This Project Shows
+## Things I’d add next
 
-* Full-stack development (React + Python)
-* API integration (frontend ↔ backend)
-* State management (cart logic)
-* Basic e-commerce functionality
-
----
-
-# 🔧 Future Improvements
-
+* Quantity controls in the cart
+* Remove/update cart items
+* Product detail pages
 * Stripe checkout
-* Product filtering/search
-* Database integration
-* Deployment (live site)
+* Database instead of hardcoded products
+* Deployment
+
+---
+
+## Notes
+
+This project is meant to be simple but realistic. I focused more on understanding the flow of data and structure rather than adding a lot of features at once.
