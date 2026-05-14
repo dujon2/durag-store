@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [searchText, setSearchText] = useState("");
+  
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/products")
@@ -13,15 +15,53 @@ function App() {
   }, []);
 
   const addToCart = (product) => {
-    setCart([...cart, product]);
-  };
-
-  const cartTotal = cart.reduce((total, item) => total + item.price, 0);
-
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchText.toLowerCase())||
-    product.material.toLowerCase().includes(searchText.toLowerCase())
+  const existingItem = cart.find(
+    (item) => item.id === product.id
   );
+
+  if (existingItem) {
+    const updatedCart = cart.map((item) =>
+      item.id === product.id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
+
+    setCart(updatedCart);
+  } else {
+    setCart([
+      ...cart,
+      { ...product, quantity: 1 }
+    ]);
+  }
+};
+
+
+const cartTotal = cart.reduce((t, i) => t + i.price * i.quantity, 0);
+const cartCount = cart.reduce((t, i) => t + i.quantity, 0);
+
+
+const filteredProducts = products.filter((product) =>
+  product.name.toLowerCase().includes(searchText.toLowerCase())||
+  product.material.toLowerCase().includes(searchText.toLowerCase())
+);
+
+const removeFromCart = (product) => {
+  const newCart = [...cart];
+  const index = newCart.indexOf(product);
+  if (index !== -1) {
+    newCart.splice(index, 1);
+    setCart(newCart);
+  }
+}
+
+const decreaseQty = (id) => {
+  setCart(cart
+    .map(i => i.id === id ? { ...i, quantity: i.quantity - 1 } : i)
+    .filter(i => i.quantity > 0)
+  );
+};
+
+
 
   return (
     <div>
@@ -85,11 +125,28 @@ function App() {
             <p>Your cart is empty.</p>
           ) : (
             <div>
-              {cart.map((item, index) => (
-                <p key={index}>
-                  {item.name} - ${item.price}
-                </p>
-              ))}
+              {cart.map((item) => (
+              <div className="cart-item" key={item.id}>
+                <span>{item.name}</span>
+
+                <div className="qty-controls">
+                  <button onClick={() => decreaseQty(item.id)}>-</button>
+
+                  <span>{item.quantity}</span>
+
+                  <button onClick={() => addToCart(item)}>+</button>
+                </div>
+
+                <span>${item.price * item.quantity}</span>
+
+                <button
+                  className="cart-item delete-button"
+                  onClick={() => removeFromCart(item)}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
 
               <h3>Total: ${cartTotal}</h3>
             </div>

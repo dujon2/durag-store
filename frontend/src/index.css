@@ -119,18 +119,7 @@ body {
   border-radius: 14px;
 }
 
-button {
-  background: #111;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 999px;
-  cursor: pointer;
-}
 
-button:hover {
-  background: #333;
-}
 
 .about,
 .cart {
@@ -138,4 +127,106 @@ button:hover {
   margin-top: 40px;
   padding: 28px;
   border-radius: 18px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 1.5fr 140px 100px 60px;
+  align-items: center;
+  gap: 16px;
+
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.qty-controls span {
+  font-size: 22px;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+.qty-controls button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: grey;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.qty-controls button:hover {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cart .delete-button {
+  background: transparent;
+  color: #555;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  width: 32px;
+  height: 32px;
+  padding: 0; 
+  
+}
+
+.delete-button:hover {
+  background: transparent;
+  color: red;
+  transform: scale(1.15);
+}
+.delete-button {
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+  color: red;
+
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0 auto;
+
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.delete-button:hover {
+  transform: scale(1.15);
+  color: darkred;
 }
